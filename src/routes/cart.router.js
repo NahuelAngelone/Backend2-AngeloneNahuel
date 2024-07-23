@@ -23,7 +23,7 @@ router.get("/:cid", async (req, res) => {
 		const carritoBuscado = await cartManager.getCarritoById(carritoID);
 		res.json(carritoBuscado.products);
 	} catch (error) {
-		res.status(500).send("Error del servidor al buscar un carrito loco");
+		res.status(500).send("Error del servidor");
 	}
 })
 
