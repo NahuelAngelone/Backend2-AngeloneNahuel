@@ -1,0 +1,94 @@
+[
+  {
+    "title": "Refrigerador Samsung",
+    "description": "Refrigerador Samsung con tecnología No Frost y capacidad de 320 litros.",
+    "price": 120000,
+    "id": 1,
+    "code": "E001",
+    "stock": 10
+  },
+  {
+    "title": "Televisor LG 55\"",
+    "description": "Televisor LG 55 pulgadas 4K UHD con inteligencia artificial.",
+    "price": 80000,
+    "id": 2,
+    "code": "E002",
+    "stock": 15
+  },
+  {
+    "title": "Laptop Dell Inspiron",
+    "description": "Laptop Dell Inspiron con procesador Intel i7 y 16GB de RAM.",
+    "price": 95000,
+    "id": 3,
+    "code": "E003",
+    "stock": 8
+  },
+  {
+    "title": "Smartphone iPhone 12",
+    "description": "Smartphone Apple iPhone 12 con 128GB de almacenamiento.",
+    "price": 120000,
+    "id": 4,
+    "code": "E004",
+    "stock": 20
+  },
+  {
+    "title": "Tablet Samsung Galaxy Tab",
+    "description": "Tablet Samsung Galaxy Tab con pantalla de 10.5 pulgadas y 64GB de almacenamiento.",
+    "price": 50000,
+    "id": 5,
+    "code": "E005",
+    "stock": 30
+  },
+  {
+    "title": "Auriculares Sony WH-1000XM4",
+    "description": "Auriculares Sony inalámbricos con cancelación de ruido.",
+    "price": 25000,
+    "id": 6,
+    "code": "E006",
+    "stock": 25
+  },
+  {
+    "title": "Cámara Canon EOS M50",
+    "description": "Cámara Canon mirrorless con lente de 15-45mm.",
+    "price": 85000,
+    "id": 7,
+    "code": "E007",
+    "stock": 12
+  },
+  {
+    "title": "Consola PlayStation 5",
+    "description": "Consola Sony PlayStation 5 con 1TB de almacenamiento.",
+    "price": 75000,
+    "id": 8,
+    "code": "E008",
+    "stock": 10
+  },
+  {
+    "title": "Reloj inteligente Apple Watch Series 6",
+    "description": "Reloj inteligente Apple Watch con GPS y monitor de oxígeno en sangre.",
+    "price": 45000,
+    "id": 9,
+    "code": "E009",
+    "stock": 18
+  },
+  {
+    "title": "Altavoz inteligente Amazon Echo",
+    "description": "Altavoz inteligente Amazon Echo con Alexa incorporada.",
+    "price": 15000,
+    "id": 10,
+    "code": "E010",
+    "stock": 35
+  },
+  {
+    "title": "Cafetera Nespresso Vertuo",
+    "description": "Cafetera Nespresso Vertuo con tecnología de centrifusión y 5 tamaños de taza.",
+    "price": 30000,
+    "img": "cafetera.jpg",
+    "code": "E011",
+    "stock": 22,
+    "category": "Electrodomésticos",
+    "status": true,
+    "thumbnails": [],
+    "id": 11
+  }
+]
