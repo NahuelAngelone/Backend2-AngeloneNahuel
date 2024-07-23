@@ -4,7 +4,7 @@ import ProductManager from "../controller/product-manager.js";
 const router = Router();
 const manager = new ProductManager("./src/data/products.json")
 
-router.get("/products", async (req, res) => {
+router.get("/", async (req, res) => {
 	let limit = req.query.limit;
 	try {
 		const arrayProductos = await manager.getProducts();
@@ -22,7 +22,7 @@ router.get("/products", async (req, res) => {
 
 //ruta ‘/products/:pid’, la cual debe recibir por req.params el pid (product Id), y devolver sólo el producto solicitado, en lugar de todos los productos. 
 
-router.get("/products/:pid", async (req, res) => {
+router.get("/:pid", async (req, res) => {
 	let id = req.params.pid;
 
 	const producto = await manager.getProductById(parseInt(id));
@@ -36,7 +36,7 @@ router.get("/products/:pid", async (req, res) => {
 
 //La ruta raíz POST / deberá agregar un nuevo producto
 
-router.post("/products", async (req, res) => {
+router.post("/", async (req, res) => {
 	const nuevoProducto = req.body;
 	try {
 		await manager.addProduct(nuevoProducto);
@@ -47,7 +47,7 @@ router.post("/products", async (req, res) => {
 })
 
 // DELETE /products/:pid - Eliminar un producto por su ID
-router.delete("/products/:pid", async (req, res) => {
+router.delete("/:pid", async (req, res) => {
     let id = req.params.pid;
     try {
         await manager.deleteProduct(parseInt(id));
@@ -58,7 +58,7 @@ router.delete("/products/:pid", async (req, res) => {
 });
 
 // PUT /products/:pid - Actualizar un producto por su ID
-router.put("/products/:pid", async (req, res) => {
+router.put("/:pid", async (req, res) => {
     let id = req.params.pid;
     const productoActualizado = req.body;
 
