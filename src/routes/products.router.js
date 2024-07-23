@@ -46,4 +46,28 @@ router.post("/products", async (req, res) => {
 	}
 })
 
+// DELETE /products/:pid - Eliminar un producto por su ID
+router.delete("/products/:pid", async (req, res) => {
+    let id = req.params.pid;
+    try {
+        await manager.deleteProduct(parseInt(id));
+        res.send({ message: "Producto eliminado exitosamente" });
+    } catch (error) {
+        res.status(500).send({ status: "error", message: error.message });
+    }
+});
+
+// PUT /products/:pid - Actualizar un producto por su ID
+router.put("/products/:pid", async (req, res) => {
+    let id = req.params.pid;
+    const productoActualizado = req.body;
+
+    try {
+        await manager.updateProduct(parseInt(id), productoActualizado);
+        res.send({ message: "Producto actualizado exitosamente" });
+    } catch (error) {
+        res.status(500).send({ status: "error", message: error.message });
+    }
+});
+
 export default router;
