@@ -11,8 +11,8 @@ const PUERTO = 8080;
 app.use(express.json());
 
 //para las rutas
-app.use("/", cartRouter);
-app.use("/", productsRouter);
+app.use("/api/carts", cartRouter);
+app.use("/api/products", productsRouter);
 
 //para archivos estaticos + seguridad
 app.use("/static", express.static("./src/public"))

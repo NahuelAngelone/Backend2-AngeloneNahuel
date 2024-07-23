@@ -10,7 +10,7 @@ router.post("/", async (req, res) => {
 		const nuevoCarrito = await cartManager.crearCarrito();
 		res.json(nuevoCarrito);
 	} catch (error) {
-		res.status(500).send("Error del servidor, que no sirve para nada");
+		res.status(500).send("Error del servidor");
 	}
 })
 
