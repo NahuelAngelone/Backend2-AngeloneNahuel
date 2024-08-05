@@ -78,17 +78,5 @@
     "id": 10,
     "code": "E010",
     "stock": 35
-  },
-  {
-    "title": "Cafetera Nespresso Vertuo",
-    "description": "Cafetera Nespresso Vertuo con tecnología de centrifusión y 5 tamaños de taza.",
-    "price": 30000,
-    "img": "cafetera.jpg",
-    "code": "E011",
-    "stock": 22,
-    "category": "Electrodomésticos",
-    "status": true,
-    "thumbnails": [],
-    "id": 11
   }
 ]
