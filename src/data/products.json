@@ -72,11 +72,12 @@
     "stock": 18
   },
   {
-    "title": "Altavoz inteligente Amazon Echo",
-    "description": "Altavoz inteligente Amazon Echo con Alexa incorporada.",
-    "price": 15000,
     "id": 10,
-    "code": "E010",
-    "stock": 35
+    "title": "laptop",
+    "description": "i7",
+    "price": "30000",
+    "img": "Sin Imagen",
+    "code": "E011",
+    "stock": "3"
   }
 ]

@@ -54,11 +54,29 @@ app.post("/img", upload.single("imagen"), (req, res) => {
 
 const io = new Server(httpServer);
 
-io.on("connection", (socket) => {
-	socket.on("mensaje", (data) => {
-		console.log(data);
 
-	socket.emit("saludo", "hola cliente");
+import ProductManager from "./controller/product-manager.js";
+const productManager = new ProductManager("./src/data/products.json");
+
+
+io.on("connection", async (socket) => {
+	console.log("Un cliente se conecto");
+
+	//Enviamos el array de productos: 
+	socket.emit("productos", await productManager.getProducts());
+
+	//Recibimos el evento "eliminarProducto" desde el cliente: 
+	socket.on("eliminarProducto", async (id) => {
+		await productManager.deleteProduct(id);
+
+		//Le voy a enviar la lista actualizada al cliente: 
+		io.sockets.emit("productos", await productManager.getProducts());
 	})
 
+	//Agregamos productos por medio de un formulario: 
+	socket.on("agregarProducto", async (producto) => {
+		await productManager.addProduct(producto);
+		//Le voy a enviar la lista actualizada al cliente: 
+		io.sockets.emit("productos", await productManager.getProducts());
+	})
 })
