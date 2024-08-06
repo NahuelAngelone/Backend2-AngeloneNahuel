@@ -79,5 +79,14 @@
     "img": "Sin Imagen",
     "code": "E011",
     "stock": "3"
+  },
+  {
+    "id": 11,
+    "title": "Notebook",
+    "description": "i5",
+    "price": "50000",
+    "img": "Sin Imagen",
+    "code": "E012",
+    "stock": "12"
   }
 ]
