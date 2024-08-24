@@ -6,7 +6,7 @@ import exphbs from "express-handlebars";
 import viewsRouter from "./routes/views.router.js"
 import { Server } from "socket.io";
 import usuariosRouter from "./routes/usuarios.router.js";
-import mongoose from "mongoose";
+import mongoose from "./database.js";
 
 
 const app = express();
@@ -59,8 +59,8 @@ app.post("/img", upload.single("imagen"), (req, res) => {
 const io = new Server(httpServer);
 
 
-import ProductManager from "./controller/product-manager.js";
-const productManager = new ProductManager("./src/data/products.json");
+import ProductManager from "./dao/db/product-manager-db.js";
+const productManager = new ProductManager();
 
 
 io.on("connection", async (socket) => {
@@ -85,7 +85,3 @@ io.on("connection", async (socket) => {
 	})
 })
 
-//Conecto a mongo
-mongoose.connect("mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0")
-	.then(() => console.log("mongo on"))
-	.catch(() => console.log("mongo off"))
