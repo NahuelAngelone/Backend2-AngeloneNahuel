@@ -5,6 +5,8 @@ import cartRouter from "./routes/cart.router.js";
 import exphbs from "express-handlebars";
 import viewsRouter from "./routes/views.router.js"
 import { Server } from "socket.io";
+import usuariosRouter from "./routes/usuarios.router.js";
+import mongoose from "mongoose";
 
 
 const app = express();
@@ -18,11 +20,13 @@ app.set('views', './src/views');
 
 //para que maneje JSON
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //para las rutas
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);
-app.use('/', viewsRouter)
+app.use('/', viewsRouter);
+app.use('/usuarios', usuariosRouter);
 
 
 //para archivos estaticos + seguridad
@@ -80,3 +84,8 @@ io.on("connection", async (socket) => {
 		io.sockets.emit("productos", await productManager.getProducts());
 	})
 })
+
+//Conecto a mongo
+mongoose.connect("mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0")
+	.then(() => console.log("mongo on"))
+	.catch(() => console.log("mongo off"))
