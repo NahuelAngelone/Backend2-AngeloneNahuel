@@ -67,21 +67,21 @@ io.on("connection", async (socket) => {
 	console.log("Un cliente se conecto");
 
 	//Enviamos el array de productos: 
-	socket.emit("productos", await productManager.getProducts());
+	socket.emit("products", await productManager.getProducts());
 
 	//Recibimos el evento "eliminarProducto" desde el cliente: 
 	socket.on("eliminarProducto", async (id) => {
 		await productManager.deleteProduct(id);
 
 		//Le voy a enviar la lista actualizada al cliente: 
-		io.sockets.emit("productos", await productManager.getProducts());
+		io.sockets.emit("products", await productManager.getProducts());
 	})
 
 	//Agregamos productos por medio de un formulario: 
 	socket.on("agregarProducto", async (producto) => {
 		await productManager.addProduct(producto);
 		//Le voy a enviar la lista actualizada al cliente: 
-		io.sockets.emit("productos", await productManager.getProducts());
+		io.sockets.emit("products", await productManager.getProducts());
 	})
 })
 
