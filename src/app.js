@@ -11,6 +11,8 @@ import session from "express-session";
 import cookieParser from "cookie-parser";
 import FileStore from "session-file-store";
 import sessionRouter from "./routes/session.router.js"
+import passport from "passport";
+import initializePassport from "./config/passport.config.js";
 
 //Persistencias de archivos
 const fileStore = new FileStore(session);
@@ -37,6 +39,11 @@ app.use(session({
 		mongoUrl: "mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0", ttl:100
 	})
 }))
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
+
 //para las rutas
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);

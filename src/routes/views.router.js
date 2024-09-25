@@ -82,12 +82,18 @@ router.get("/carts/:cid", async (req, res) => {
 //Formulario de Registro. 
 
 router.get("/register", (req, res) => {
+  if(req.session.login) {
+    return res.redirect("/profile")
+  }
   res.render("registro");
 })
 
 //Formulario de Login. 
 
 router.get("/login", (req, res) => {
+  if(req.session.login) {
+    return res.redirect("/profile")
+  }
   res.render("login");
 })
 
@@ -95,7 +101,10 @@ router.get("/login", (req, res) => {
 //Perfil. 
 
 router.get("/profile", (req, res) => {
-  res.render("perfil");
+  if(!req.session.login) {
+    return res.redirect("/login")
+  }
+  res.render("perfil", {user: req.session.user});
 })
 
 export default router;
