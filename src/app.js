@@ -7,6 +7,13 @@ import viewsRouter from "./routes/views.router.js"
 import { Server } from "socket.io";
 import usuariosRouter from "./routes/usuarios.router.js";
 import mongoose from "./database.js";
+import session from "express-session";
+import cookieParser from "cookie-parser";
+import FileStore from "session-file-store";
+import sessionRouter from "./routes/session.router.js"
+
+//Persistencias de archivos
+const fileStore = new FileStore(session);
 
 
 const app = express();
@@ -21,12 +28,21 @@ app.set('views', './src/views');
 //para que maneje JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cookieParser());
+app.use(session({
+	secret: "secret",
+	resave: true,
+	saveUninitialized: true,
+	store: MongoStore.create({
+		mongoUrl: "mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0", ttl:100
+	})
+}))
 //para las rutas
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);
 app.use('/', viewsRouter);
-app.use('/usuarios', usuariosRouter);
+app.use('/api/usuarios', usuariosRouter);
+app.use('/api/sessions', sessionRouter)
 
 
 //para archivos estaticos + seguridad
@@ -60,6 +76,7 @@ const io = new Server(httpServer);
 
 
 import ProductManager from "./dao/db/product-manager-db.js";
+import MongoStore from "connect-mongo";
 const productManager = new ProductManager();
 
 

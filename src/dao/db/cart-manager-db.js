@@ -136,6 +136,16 @@ class CartManager {
 		}
 	}
 
+	 //metodo para eliminar un carrito por ID
+	 deleteCart = async (cartId) => {
+		try {
+				return await CartModel.findByIdAndDelete(cartId)
+		} catch (error) {
+				console.log('Error al eliminar el carrito:', error.message)
+				throw error
+		}
+}
+
 }
 
 

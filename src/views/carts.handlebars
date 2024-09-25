@@ -1,16 +1,20 @@
-<div class="container">
+<div>
 	<h1>Carrito de Compras</h1>
 
 	{{#each productos}}
-	<div class="cart-item">
-		<p>Producto: {{this.product.title}}</p>
+	<div>
+		<p>Producto: {{title}}</p>
 		<p>Cantidad: {{this.quantity}}</p>
+	</div>
+	<div>
+		<p>Total: ${{this.product.price}}</p>
+		
 	</div>
 	{{/each}}
 
 	
-	<div class="total-container">
-		<p>Total: ${{totalPrice}}</p>
+	<div>
+		<p>Total: ${{this.product.price}}</p>
 		
 	</div>
 </div>
