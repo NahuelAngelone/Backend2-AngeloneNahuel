@@ -10,7 +10,7 @@ import mongoose from "./database.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import FileStore from "session-file-store";
-import sessionRouter from "./routes/session.router.js"
+import usuariosPostRouter from "./routes/usuariosPost.router.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 
@@ -36,7 +36,7 @@ app.use(session({
 	resave: true,
 	saveUninitialized: true,
 	store: MongoStore.create({
-		mongoUrl: "mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0", ttl:100
+		mongoUrl: "mongodb+srv://nahuelangelone94:Mongo123@cluster0.p2h3zxe.mongodb.net/Store?retryWrites=true&w=majority&appName=Cluster0", ttl: 100
 	})
 }))
 
@@ -48,8 +48,8 @@ app.use(passport.session());
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);
 app.use('/', viewsRouter);
-app.use('/api/usuarios', usuariosRouter);
-app.use('/api/sessions', sessionRouter)
+app.use('/api/usuarios', usuariosPostRouter);
+app.use('/api/sessions', usuariosRouter)
 
 
 //para archivos estaticos + seguridad

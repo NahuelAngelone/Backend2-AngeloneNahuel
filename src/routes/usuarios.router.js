@@ -1,53 +1,110 @@
 import { Router } from "express";
+import UsuarioModel from "../models/usuarios.model.js";
+import jwt from "jsonwebtoken";
+import { createHash, isValidPassword } from "../utils/util.js";
+import passport from "passport";
 const router = Router();
 
-import UsuarioModel from "../models/usuarios.model.js";
+//Register
+router.post("/register", async (req, res) => {
+	const { usuario, first_name, last_name, email, password, age } = req.body;
 
-router.get("/", async (req, res) => {
 	try {
-		const listadoUsuarios = await UsuarioModel.find()
-		res.json(listadoUsuarios);
-	} catch (error) {
-		res.status(500).json({ message: "Error en el servidor" });
-	}
-})
+		//Verificamos si ya existe el usuario. 
+		const existeUsuario = await UsuarioModel.findOne({ usuario });
 
-//agregamos usuarios
-router.post("/", async (req, res) => {
-	const nuevoUsuario = req.body;
-	try {
-		const documentoUser = new UsuarioModel(nuevoUsuario);
-		await documentoUser.save();
-		res.send({ message: "Usuario agregado exitosamente", usuario: documentoUser });
-	} catch (error) {
-		res.send("error");
-	}
-})
-
-//actualizo usuario
-router.put("/:id", async (req, res) => {
-	try {
-		const user = await UsuarioModel.findByIdAndUpdate(req.params.id, req.body);
-		if (!user) {
-			return res.status(404).send("usuario no encontrado");
+		if (existeUsuario) {
+			return res.status(400).send("El usuario ya existe");
 		}
-		res.status(200).send({ message: "Usuario actualizado" })
+
+		//Si no existe, lo puedo crear: 
+		const nuevoUsuario = new UsuarioModel({
+			usuario,
+			first_name,
+			last_name,
+			email,
+			password: createHash(password),
+			age,
+		});
+
+		await nuevoUsuario.save();
+
+		//Generar el Token JWT
+		const token = jwt.sign({ usuario: nuevoUsuario.usuario }, "coderhouse", { expiresIn: "1h" });
+
+		//Lo mandamos con la cookie. 
+
+		res.cookie("coderCookieToken", token, {
+			maxAge: 3600000,
+			httpOnly: true
+		})
+
+		res.redirect("/api/sessions/current");
+
 	} catch (error) {
-		res.status(500).send("Error del servidor")
+		res.status(500).send("Error interno del servidor");
 	}
 })
 
-//elimino usuario
-router.delete("/:id", async (req, res) => {
+
+//Login
+
+router.post("/login", async (req, res) => {
+	const { usuario, password } = req.body;
+
 	try {
-		const user = await UsuarioModel.findByIdAndDelete(req.params.id);
-		if (!user) {
-			return res.status(404).send("usuario no encontrado");
+		//Buscamos al usuario en MongoDB: 
+		const usuarioEncontrado = await UsuarioModel.findOne({ usuario });
+
+		//Si no lo encuentro, lo puedo mandar a registrarse: 
+		if (!usuarioEncontrado) {
+			return res.status(401).send("Usuario no registrado");
 		}
-		res.status(200).send({ message: "Usuario borrado" })
+
+		//Verificamos la contraseña: 
+		if (!isValidPassword(password, usuarioEncontrado)) {
+			return res.status(401).send("Contraseña incorrecta");
+		}
+
+		//Generamos el token JWT: 
+
+		const token = jwt.sign({ usuario: usuarioEncontrado.usuario, rol: usuarioEncontrado.rol }, "coderhouse", { expiresIn: "1h" });
+
+		//Enviamos con la cookie: 
+
+		res.cookie("coderCookieToken", token, {
+			maxAge: 3600000,
+			httpOnly: true
+		})
+
+		res.redirect("/api/sessions/current");
 	} catch (error) {
-		res.status(500).send("Error del servidor")
+		res.status(500).send("Error interno del servidor");
 	}
 })
 
-export default router;
+//Logout
+router.post("/logout", (req, res) => {
+	res.clearCookie("coderCookieToken");
+	res.redirect("/login");
+})
+
+//Current: 
+
+router.get("/current", passport.authenticate("current", { session: false }), (req, res) => {
+	res.render("perfil", { usuario: req.user.usuario });
+})
+
+//Admin
+
+router.get("/admin", passport.authenticate("current", { session: false }), (req, res) => {
+	if (req.user.rol !== "admin") {
+		return res.status(403).send("Acceso denegado!");
+	}
+
+	//Si el usuario es administrador, mostrar la vista correspondiente: 
+	res.render("admin");
+})
+
+
+export default router; 
