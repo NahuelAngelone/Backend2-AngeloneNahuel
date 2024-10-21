@@ -55,6 +55,7 @@ app.use("/static", express.static("./src/public"))
 app.use(express.static("./src/public"))
 
 
+
 //Server escuchando
 const httpServer = app.listen(PUERTO, () => {
 	console.log("Escuchando correctamente")
