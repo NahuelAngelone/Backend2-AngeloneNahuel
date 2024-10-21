@@ -5,12 +5,11 @@ import cartRouter from "./routes/cart.router.js";
 import exphbs from "express-handlebars";
 import viewsRouter from "./routes/views.router.js"
 import { Server } from "socket.io";
-import usuariosRouter from "./routes/usuarios.router.js";
+import sessionsRouter from "./routes/session.router.js";
 import mongoose from "./database.js";
 import session from "express-session";
 import cookieParser from "cookie-parser";
 import FileStore from "session-file-store";
-import usuariosPostRouter from "./routes/usuariosPost.router.js"
 import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 
@@ -48,8 +47,7 @@ app.use(passport.session());
 app.use("/api/carts", cartRouter);
 app.use("/api/products", productsRouter);
 app.use('/', viewsRouter);
-app.use('/api/usuarios', usuariosPostRouter);
-app.use('/api/sessions', usuariosRouter)
+app.use('/api/sessions', sessionsRouter)
 
 
 //para archivos estaticos + seguridad
