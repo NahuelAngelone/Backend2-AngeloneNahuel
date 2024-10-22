@@ -5,8 +5,8 @@ import UserRepository from "../repositories/user.repository.js";
 import { calcularTotal } from "../utils/util.js"; 
 
 class TicketService {
-	async purchaseCart(cartId) {
-		const cart = await CartRepository.getCartById(cartId);
+	async purchaseCart(cid) {
+		const cart = await CartRepository.getCartById(cid);
 		const productosNoDisponibles = [];
 
 		for (const item of cart.products) {
@@ -33,7 +33,7 @@ class TicketService {
 
 		// Eliminar productos no disponibles del carrito
 		cart.products = cart.products.filter(item => !productosNoDisponibles.includes(item.product));
-		await CartRepository.updateCart(cart._id, cart); 
+		await CartRepository.updateCart(cid, cart); 
 
 		return { ticket, productosNoDisponibles };
 	}
