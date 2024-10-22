@@ -41,6 +41,20 @@ class CartController {
 			res.status(500).send("Error interno del servidor");
 		}
 	}
+	async purchaseCart(req, res) {
+		const cartId = req.params.cid;
+		try {
+			const result = await TicketService.purchaseCart(cartId);
+			res.json({
+				message: "Compra realizada con éxito",
+				ticket: result.ticket,
+				productosNoDisponibles: result.productosNoDisponibles
+			});
+		} catch (error) {
+			res.status(500).json({ error: "Error al procesar la compra: " + error.message });
+		}
+	}
+
 }
 
 export default CartController; 
