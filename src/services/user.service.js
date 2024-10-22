@@ -1,6 +1,7 @@
 import { createHash, isValidPassword } from "../utils/util.js";
 //Importamos el repository: 
 import userRepository from "../repositories/user.repository.js";
+import cartService from "./cart.service.js";
 
 class UserService {
 	async registerUser(userData) {
@@ -10,6 +11,11 @@ class UserService {
 		if (existeUsuario) throw new Error("El usuario ya existe");
 
 		userData.password = createHash(userData.password);
+
+		const nuevoCarrito = await cartService.createCart();
+		userData.cart = nuevoCarrito._id;
+
+
 		return await userRepository.createUser(userData);
 	}
 
