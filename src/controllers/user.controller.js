@@ -47,8 +47,7 @@ class UserController {
 
 	async current(req, res) {
 		if (req.user) {
-			const user = req.user;
-			const userDTO = new UserDTO(user);
+			const userDTO = new UserDTO(req.user);
 			res.render("home", { user: userDTO })
 		} else {
 			res.send("No autorizado");

@@ -15,5 +15,8 @@ const calcularTotal = (products) => {
 
     return total; 
 }
+const generateUniqueCode = () => {
+    return Math.random().toString(36).substring(2, 10).toUpperCase(); 
+};
 
-export { createHash, isValidPassword, calcularTotal }; 
+export { createHash, isValidPassword, calcularTotal, generateUniqueCode };

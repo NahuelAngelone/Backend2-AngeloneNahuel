@@ -1,10 +1,12 @@
 const mongoose = require('mongoose');
+const { generateUniqueCode } = require('../../utils/util');
 
 const ticketSchema = new mongoose.Schema({
 	code: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		default: () => generateUniqueCode()
 	},
 	purchase_datetime: {
 		type: Date,

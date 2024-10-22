@@ -20,9 +20,13 @@ class UserService {
 	}
 
 	async loginUser(email, password) {
-		const user = await userRepository.getUserByEmail(email);
-		if (!user || !isValidPassword(password, user)) throw new Error("Credenciales incorrectas");
-		return user;
+		try {
+			const user = await userRepository.getUserByEmail(email);
+			if (!user || !isValidPassword(password, user)) throw new Error("Credenciales incorrectas");
+			return user;
+		} catch (error) {
+			throw new Error("Error al iniciar sesión: " + error.message);
+		}
 	}
 }
 
